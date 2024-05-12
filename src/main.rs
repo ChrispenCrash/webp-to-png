@@ -53,6 +53,15 @@ fn main() {
                     continue;
                 }
             };
+
+            // Check if the PNG file was created successfully
+            if new_path.exists() {
+                // Delete the original WebP file
+                match fs::remove_file(path) {
+                    Ok(_) => println!("Deleted original file: {}", path.display()),
+                    Err(e) => eprintln!("Failed to delete '{}': {}", path.display(), e),
+                }
+            }
         }
     }
 }
