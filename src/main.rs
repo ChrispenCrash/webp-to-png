@@ -45,23 +45,34 @@ fn main() {
                 }
             };
 
-            let new_path = path.with_extension("png");
-            match img.save(&new_path) {
-                Ok(_) => println!("Successfully converted to: {}", new_path.display()),
-                Err(e) => {
-                    eprintln!("Failed to save '{}': {}", new_path.display(), e);
-                    continue;
-                }
-            };
+            let mut new_path = path.with_extension("png");
+            let mut counter = 1;
 
-            // Check if the PNG file was created successfully
-            if new_path.exists() {
-                // Delete the original WebP file
-                match fs::remove_file(path) {
-                    Ok(_) => println!("Deleted original file: {}", path.display()),
-                    Err(e) => eprintln!("Failed to delete '{}': {}", path.display(), e),
-                }
+            // Loop to find a unique filename if the intended one already exists
+            while new_path.exists() {
+                // Construct a new filename with an appended number
+                let new_filename = format!(
+                    "{}_{}.{}",
+                    path.file_stem().unwrap().to_str().unwrap(),
+                    counter,
+                    "png"
+                );
+                new_path = path.with_file_name(new_filename);
+                counter += 1;
             }
+
+            // Proceed to save the new PNG file
+            match img.save(&new_path) {
+                Ok(_) => {
+                    println!("Successfully converted to: {}", new_path.display());
+                    // Delete the original WebP file
+                    match fs::remove_file(path) {
+                        Ok(_) => println!("Deleted original file: {}", path.display()),
+                        Err(e) => eprintln!("Failed to delete '{}': {}", path.display(), e),
+                    }
+                }
+                Err(e) => eprintln!("Failed to save '{}': {}", new_path.display(), e),
+            };
         }
     }
 }
