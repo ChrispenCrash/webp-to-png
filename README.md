@@ -11,8 +11,8 @@ This application recursively converts all `.webp` images within a specified dire
 
 1. Clone the repository:
    ```bash
-   git clone https://yourrepositorylink.git
-   cd your-repository-folder
+   git clone https://github.com/ChrispenCrash/webp-to-png.git
+   cd webp-to-png
 
 2. Build the project:
    ```bash
@@ -23,5 +23,5 @@ This application recursively converts all `.webp` images within a specified dire
 ## Usage
 To use the application, you need to specify the directory containing the `.webp` images you want to convert. Run the application with the following command:
 ```bash
-cargo run -- -d /path/to/your/directory
+cargo run -- -d /path/to/your/webp/images
 ```
