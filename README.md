@@ -24,3 +24,8 @@ To use the application, you need to specify the directory containing the `.webp`
 ```bash
 cargo run -- -d /path/to/your/webp/images
 ```
+
+Or using release build:
+```bash
+./webp-to-png -d /path/to/your/webp/images
+```
